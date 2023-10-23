@@ -7,7 +7,7 @@ on:
 jobs:
   create_pr:
     runs-on: ubuntu-latest
-    if: github.event.issue.pull_request && contains(github.event.comment.body, 'major') || contains(github.event.comment.body, 'minor') || contains(github.event.comment.body, 'patch')
+    if: github.event.issue.pull_request && github.event.issue.pull_request.head.ref == 'main' && contains(github.event.comment.body, 'major') || contains(github.event.comment.body, 'minor') || contains(github.event.comment.body, 'patch')
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
