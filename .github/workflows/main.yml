@@ -10,7 +10,15 @@ jobs:
     if: github.event.issue.pull_request && contains(github.event.comment.body, 'major') || contains(github.event.comment.body, 'minor') || contains(github.event.comment.body, 'patch')
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          ref: exp
+
+      - name: Create new branch
+        run: |
+          COMMENT_BODY="${{ github.event.comment.body }}"
+          NEW_BRANCH_NAME="version-bump-$COMMENT_BODY-${{ github.run_id }}"
+          git checkout -b $NEW_BRANCH_NAME
 
       - name: Update version based on comment
         run: |
@@ -33,7 +41,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create PR
-        run: gh pr create --base exp --head HEAD --title "Version bump to $COMMENT_BODY" --body "Automated version bump"
+        run: |
+          NEW_BRANCH_NAME="version-bump-$COMMENT_BODY-${{ github.run_id }}"
+          gh pr create --base exp --head NEW_BRANCH_NAME --title "Version bump to $COMMENT_BODY" --body "Automated version bump"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
