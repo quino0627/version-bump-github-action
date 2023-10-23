@@ -1,0 +1,38 @@
+name: Auto-create PR based on comment
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  create_pr:
+    runs-on: ubuntu-latest
+    if: github.event.issue.pull_request && contains(github.event.comment.body, 'major') || contains(github.event.comment.body, 'minor') || contains(github.event.comment.body, 'patch')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Update version based on comment
+        run: |
+          COMMENT_BODY="${{ github.event.comment.body }}"
+          if [[ "$COMMENT_BODY" == "major" ]]; then
+            yarn workspace ch-desk-web version major
+          elif [[ "$COMMENT_BODY" == "minor" ]]; then
+            yarn workspace ch-desk-web version minor
+          elif [[ "$COMMENT_BODY" == "patch" ]]; then
+            yarn workspace ch-desk-web version patch
+          fi
+      
+      - name: Commit changes
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "<eng@channel.io>"
+          git add apps/ch-desk-web/package.json
+          git commit -n -m "Bump version to $COMMENT_BODY"
+
+      - name: Push Changes
+        run: git push origin HEAD
+
+      - name: Create PR
+        run: gh pr create --base main --head HEAD --title "Version bump to $COMMENT_BODY" --body "Automated version bump"
+        
