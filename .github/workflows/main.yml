@@ -29,7 +29,7 @@ jobs:
       
       - name: Commit changes
         run: |
-          git add apps/ch-desk-web/package.json
+          git add .
           git commit -n -m "Bump version to $COMMENT_BODY"
 
       - name: Push Changes
