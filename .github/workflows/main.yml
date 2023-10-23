@@ -27,13 +27,7 @@ jobs:
           git config --global user.email "<eng@channel.io>"
           
           COMMENT_BODY="${{ github.event.comment.body }}"
-          if [[ "$COMMENT_BODY" == "major" ]]; then
-            npm version major
-          elif [[ "$COMMENT_BODY" == "minor" ]]; then
-            npm version minor
-          elif [[ "$COMMENT_BODY" == "patch" ]]; then
-            npm version patch
-          fi
+          npm --no-git-tag-version version $COMMENT_BODY
 
       - name: Commit and Push Changes
         run: |
