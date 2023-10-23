@@ -1,0 +1,8 @@
+{
+  "name": "version-bump-github-action",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/quino0627/version-bump-github-action.git",
+  "author": "mong <mong@channel.io>",
+  "license": "MIT"
+}
