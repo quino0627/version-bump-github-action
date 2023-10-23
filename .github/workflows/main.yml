@@ -41,7 +41,7 @@ jobs:
         run: |
           COMMENT_BODY="${{ github.event.comment.body }}"
           NEW_BRANCH_NAME="version-bump-$COMMENT_BODY-${{ github.run_id }}"
-          gh pr create --base exp --head NEW_BRANCH_NAME --title "Version bump to $COMMENT_BODY" --body "Automated version bump"
+          gh pr create --base exp --head $NEW_BRANCH_NAME --title "Version bump to $COMMENT_BODY" --body "Automated version bump"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
