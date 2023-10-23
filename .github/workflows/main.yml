@@ -27,7 +27,9 @@ jobs:
           git config --global user.email "<eng@channel.io>"
           
           COMMENT_BODY="${{ github.event.comment.body }}"
-          npm --no-git-tag-version version $COMMENT_BODY
+          NEW_VERSION=${npm --no-git-tag-version version $COMMENT_BODY}
+          echo "New Version is $NEW_VERSION"
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Commit and Push Changes
         run: |
@@ -41,7 +43,7 @@ jobs:
         run: |
           COMMENT_BODY="${{ github.event.comment.body }}"
           NEW_BRANCH_NAME="version-bump-$COMMENT_BODY-${{ github.run_id }}"
-          gh pr create --base exp --head $NEW_BRANCH_NAME --title "Version bump to $COMMENT_BODY" --body "Automated version bump"
+          gh pr create --base exp --head $NEW_BRANCH_NAME --title "Version bump to $COMMENT_BODY ($NEW_VERSION)" --body "Automated version bump"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
