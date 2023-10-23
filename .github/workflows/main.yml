@@ -14,6 +14,10 @@ jobs:
 
       - name: Update version based on comment
         run: |
+          # Setup git user
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "<eng@channel.io>"
+          
           COMMENT_BODY="${{ github.event.comment.body }}"
           if [[ "$COMMENT_BODY" == "major" ]]; then
             npm version major
@@ -25,8 +29,6 @@ jobs:
       
       - name: Commit changes
         run: |
-          git config --global user.name "GitHub Actions Bot"
-          git config --global user.email "<eng@channel.io>"
           git add apps/ch-desk-web/package.json
           git commit -n -m "Bump version to $COMMENT_BODY"
 
