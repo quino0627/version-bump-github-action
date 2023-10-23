@@ -29,6 +29,8 @@ jobs:
 
       - name: Push Changes
         run: git push origin HEAD
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create PR
         run: gh pr create --base main --head HEAD --title "Version bump to $COMMENT_BODY" --body "Automated version bump"
