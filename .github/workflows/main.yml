@@ -35,8 +35,11 @@ jobs:
             npm version patch
           fi
 
-      - name: Push Changes
-        run: git push origin HEAD
+      - name: Commit and Push Changes
+        run: |
+          git add package.json
+          git commit -n -m "Bump Version"
+          git push origin HEAD
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
