@@ -16,11 +16,11 @@ jobs:
         run: |
           COMMENT_BODY="${{ github.event.comment.body }}"
           if [[ "$COMMENT_BODY" == "major" ]]; then
-            yarn workspace ch-desk-web version major
+            npm version major
           elif [[ "$COMMENT_BODY" == "minor" ]]; then
-            yarn workspace ch-desk-web version minor
+            npm version minor
           elif [[ "$COMMENT_BODY" == "patch" ]]; then
-            yarn workspace ch-desk-web version patch
+            npm version patch
           fi
       
       - name: Commit changes
