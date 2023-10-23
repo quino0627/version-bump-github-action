@@ -33,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create PR
-        run: gh pr create --base main --head HEAD --title "Version bump to $COMMENT_BODY" --body "Automated version bump"
+        run: gh pr create --base exp --head HEAD --title "Version bump to $COMMENT_BODY" --body "Automated version bump"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
