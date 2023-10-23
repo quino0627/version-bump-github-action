@@ -26,11 +26,6 @@ jobs:
           elif [[ "$COMMENT_BODY" == "patch" ]]; then
             npm version patch
           fi
-      
-      - name: Commit changes
-        run: |
-          git add .
-          git commit -n -m "Bump version to $COMMENT_BODY"
 
       - name: Push Changes
         run: git push origin HEAD
