@@ -27,7 +27,7 @@ jobs:
           git config --global user.email "<eng@channel.io>"
           
           COMMENT_BODY="${{ github.event.comment.body }}"
-          NEW_VERSION=${npm --no-git-tag-version version $COMMENT_BODY}
+          NEW_VERSION=$(npm --no-git-tag-version version $COMMENT_BODY)
           echo "New Version is $NEW_VERSION"
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
